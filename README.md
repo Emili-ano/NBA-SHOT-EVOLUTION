@@ -85,3 +85,69 @@ Consultar docs/project_scope.md.
 ## Seguimiento de requisitos
 
 Consultar docs/requirements_checklist.md.
+
+## Ejecucion completa del pipeline
+
+Ejecutar los siguientes comandos desde la raiz del repositorio.
+
+### 1. Adquisicion
+```powershell
+python -m src.ingestion.download_data --years 2024 2025 2026
+```
+
+### 2. Exploracion preliminar
+```powershell
+python -m src.analysis.inspect_data
+```
+
+### 3. Procesamiento
+```powershell
+python -m src.processing.build_dataset
+```
+
+### 4. Validaciones
+```powershell
+python -m src.validation.validate_dataset
+```
+
+### 5. Pruebas automatizadas
+```powershell
+python -m unittest discover -s tests -v
+```
+
+### 6. Benchmark
+```powershell
+python -m src.analysis.benchmark
+```
+
+En Windows se puede utilizar
+.\.venv\Scripts\python.exe en lugar de python.
+
+## Resultados verificados
+
+- Tres temporadas NBA descargadas.
+- 703781 intentos de tiro procesados.
+- 60 comprobaciones de calidad aprobadas.
+- 8 pruebas automatizadas exitosas.
+- Comparacion CSV vs Parquet ejecutada.
+- Reproduccion completa verificada desde una
+  copia nueva en la misma computadora.
+
+## Documentacion
+
+- Alcance: docs/project_scope.md
+- Arquitectura: docs/architecture.md
+- Decisiones: docs/decisions.md
+- Reproducibilidad: docs/reproducibility.md
+- Validaciones: docs/validation.md
+- Rendimiento: docs/performance.md
+- Requisitos: docs/requirements_checklist.md
+
+## Limitaciones
+
+Los resultados deportivos definitivos de
+Shot Selection, Hot Hand y Clutch se desarrollaran
+en la siguiente etapa del proyecto.
+
+La documentacion detalla las limitaciones de
+duplicados, marcadores y cronologia.
