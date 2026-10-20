@@ -131,3 +131,47 @@ todas las preguntas deportivas del proyecto.
 Los tipos fisicos, porcentajes de faltantes
 y distribuciones detalladas deben contrastarse
 con la exploracion ejecutada sobre los datos.
+
+## 7. Verificacion empirica de tipos y faltantes
+
+La exploracion se ejecuto directamente sobre los archivos Parquet originales de las temporadas 2023-24, 2024-25 y 2025-26.
+
+### Volumen y duplicados
+
+| Temporada | Registros originales | Duplicados exactos |
+|---|---:|---:|
+| 2023-24 | 233789 | 13 |
+| 2024-25 | 235140 | 8 |
+| 2025-26 | 234876 | 3 |
+| **Total** | **703805** | **24** |
+
+Los duplicados exactos se detectaron comparando todas las columnas. Sin un identificador unico de intento de tiro, no puede asegurarse que cada duplicado represente un evento erroneo.
+
+### Tipos fisicos observados
+
+- Texto (str): game_id, season_type_id, clock, team_tricode, player_name, action_type, sub_type, shot_result, description, score_home y score_away.
+- Entero de 32 bits (int32): season.
+- Entero de 64 bits (int64): period, team_id, person_id, shot_value, shot_distance, x_legacy y y_legacy.
+
+Los identificadores numericos no deben interpretarse como cantidades medibles.
+
+### Valores faltantes y cadenas vacias
+
+En la exploracion original no se observaron valores nulos en las 19 columnas de las tres temporadas.
+
+Sin embargo, score_home y score_away contienen cadenas vacias:
+
+| Temporada | Cadenas vacias en cada columna de marcador |
+|---|---:|
+| 2023-24 | 123093 |
+| 2024-25 | 125475 |
+| 2025-26 | 124538 |
+
+Estos valores deben considerarse faltantes al utilizar los marcadores en un analisis. No deben convertirse automaticamente en cero.
+
+### Implicaciones para el analisis
+
+- La presencia de marcadores vacios limita los analisis directos de situaciones clutch.
+- Los duplicados exactos se eliminan en el procesamiento actual, conservando documentada esta decision.
+- Las coordenadas x_legacy y y_legacy requieren verificar su escala y orientacion antes de crear mapas.
+- La validacion automatizada y la exploracion deben repetirse cuando cambien los archivos fuente.
