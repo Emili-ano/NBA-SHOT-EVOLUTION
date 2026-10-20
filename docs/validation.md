@@ -1,0 +1,79 @@
+# Validacion del dataset NBA SHOT IQ
+
+- Tiros procesados: 703,781
+- Comprobaciones aprobadas: 60
+- Comprobaciones fallidas: 0
+
+## Resultados
+
+| Ambito | Comprobacion | Estado | Detalle |
+|---|---|---|---|
+| 2024 | Columnas obligatorias | PASS | [] |
+| 2024 | Tipos numericos | PASS | [] |
+| 2024 | Valores faltantes obligatorios | PASS | Total faltantes: 0 |
+| 2024 | Trazabilidad de duplicados | PASS | Originales=233789, duplicados=13, interim=233776 |
+| 2024 | Duplicados exactos en processed | PASS | Duplicados=0 |
+| 2024 | Consistencia interim/processed | PASS | Interim=233776, processed=233776 |
+| 2024 | Valores de tiros | PASS | Valores permitidos: 2 y 3 |
+| 2024 | Resultado binario | PASS | Valores permitidos: 0 y 1 |
+| 2024 | Distancias no negativas | PASS | Distancia minima >= 0 |
+| 2024 | Puntos calculados | PASS | Puntos = valor del tiro x acierto |
+| 2024 | Temporada correcta | PASS | Temporada esperada: 2024 |
+| 2024 | Periodos validos | PASS | Min=1, Max=6 |
+| 2024 | Consistencia temporal | PASS | Relojes invalidos=0 |
+| 2024 | Marcadores completos por pareja | PASS | Pares incompletos: 0 |
+| 2024 | Marcadores disponibles en encestes | PASS | Encestes sin marcador: 0 |
+| 2024 | Marcadores ausentes solo en fallos | PASS | Ausencias inesperadas: 0 |
+| 2024 | Rangos de marcadores disponibles | PASS | Invalidos presentes: 0; sin marcador: 123080 |
+| 2024 | Volumen esperado | PASS | Filas=233789, minimo de control=100000 |
+| 2025 | Columnas obligatorias | PASS | [] |
+| 2025 | Tipos numericos | PASS | [] |
+| 2025 | Valores faltantes obligatorios | PASS | Total faltantes: 0 |
+| 2025 | Trazabilidad de duplicados | PASS | Originales=235140, duplicados=8, interim=235132 |
+| 2025 | Duplicados exactos en processed | PASS | Duplicados=0 |
+| 2025 | Consistencia interim/processed | PASS | Interim=235132, processed=235132 |
+| 2025 | Valores de tiros | PASS | Valores permitidos: 2 y 3 |
+| 2025 | Resultado binario | PASS | Valores permitidos: 0 y 1 |
+| 2025 | Distancias no negativas | PASS | Distancia minima >= 0 |
+| 2025 | Puntos calculados | PASS | Puntos = valor del tiro x acierto |
+| 2025 | Temporada correcta | PASS | Temporada esperada: 2025 |
+| 2025 | Periodos validos | PASS | Min=1, Max=6 |
+| 2025 | Consistencia temporal | PASS | Relojes invalidos=0 |
+| 2025 | Marcadores completos por pareja | PASS | Pares incompletos: 0 |
+| 2025 | Marcadores disponibles en encestes | PASS | Encestes sin marcador: 0 |
+| 2025 | Marcadores ausentes solo en fallos | PASS | Ausencias inesperadas: 0 |
+| 2025 | Rangos de marcadores disponibles | PASS | Invalidos presentes: 0; sin marcador: 125467 |
+| 2025 | Volumen esperado | PASS | Filas=235140, minimo de control=100000 |
+| 2026 | Columnas obligatorias | PASS | [] |
+| 2026 | Tipos numericos | PASS | [] |
+| 2026 | Valores faltantes obligatorios | PASS | Total faltantes: 0 |
+| 2026 | Trazabilidad de duplicados | PASS | Originales=234876, duplicados=3, interim=234873 |
+| 2026 | Duplicados exactos en processed | PASS | Duplicados=0 |
+| 2026 | Consistencia interim/processed | PASS | Interim=234873, processed=234873 |
+| 2026 | Valores de tiros | PASS | Valores permitidos: 2 y 3 |
+| 2026 | Resultado binario | PASS | Valores permitidos: 0 y 1 |
+| 2026 | Distancias no negativas | PASS | Distancia minima >= 0 |
+| 2026 | Puntos calculados | PASS | Puntos = valor del tiro x acierto |
+| 2026 | Temporada correcta | PASS | Temporada esperada: 2026 |
+| 2026 | Periodos validos | PASS | Min=1, Max=6 |
+| 2026 | Consistencia temporal | PASS | Relojes invalidos=0 |
+| 2026 | Marcadores completos por pareja | PASS | Pares incompletos: 0 |
+| 2026 | Marcadores disponibles en encestes | PASS | Encestes sin marcador: 0 |
+| 2026 | Marcadores ausentes solo en fallos | PASS | Ausencias inesperadas: 0 |
+| 2026 | Rangos de marcadores disponibles | PASS | Invalidos presentes: 0; sin marcador: 124535 |
+| 2026 | Volumen esperado | PASS | Filas=234876, minimo de control=100000 |
+| Equipos | Intentos entre tablas | PASS | Detalle=703781, agregado=703781 |
+| Equipos | Encestes entre tablas | PASS | Detalle=330699, agregado=330699 |
+| Equipos | Puntos entre tablas | PASS | Detalle=765558, agregado=765558 |
+| Jugadores | Intentos entre tablas | PASS | Detalle=703781, agregado=703781 |
+| Jugadores | Encestes entre tablas | PASS | Detalle=330699, agregado=330699 |
+| Jugadores | Puntos entre tablas | PASS | Detalle=765558, agregado=765558 |
+
+## Limitaciones
+
+- No existe un identificador unico del intento.
+- Los duplicados exactos requieren revision.
+- El orden de eventos simultaneos no esta confirmado.
+- Los marcadores pueden faltar en tiros fallados.
+- No se ha verificado si el marcador es pre o post tiro.
+- Estas pruebas no demuestran causalidad.
