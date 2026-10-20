@@ -117,6 +117,17 @@ Los archivos completos deben descargarse.
 Los comandos se han ejecutado individualmente
 en el equipo de desarrollo.
 
-La reproduccion completa desde una instalacion
-limpia en otra computadora sigue pendiente
-de verificacion independiente.
+Se verifico el proyecto desde una copia nueva del
+repositorio de GitHub en el mismo equipo.
+
+Resultados:
+- Instalacion de dependencias: exitosa.
+- Pruebas automatizadas: 8 de 8 aprobadas.
+- Adquisicion de datos: exitosa.
+- Procesamiento de tres temporadas: exitoso.
+- Validaciones: 60 aprobadas, 0 fallidas.
+- Benchmark CSV vs Parquet: completado.
+
+Limitacion: no se ha realizado esta prueba
+en una computadora diferente.
+
