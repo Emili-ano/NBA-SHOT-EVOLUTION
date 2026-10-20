@@ -1,0 +1,32 @@
+﻿# NBA SHOT IQ - Configuracion de ejemplo
+# Plantilla documental; los scripts actuales
+# no leen automaticamente este archivo.
+
+project:
+  name: NBA SHOT IQ
+  environment: development
+
+data:
+  source: SportsDataverse
+  seasons:
+    - 2024
+    - 2025
+    - 2026
+
+  raw_dir: data/raw
+  interim_dir: data/interim
+  processed_dir: data/processed
+  sample_dir: data/sample
+
+processing:
+  remove_exact_duplicates: true
+  output_format: parquet
+
+validation:
+  enabled: true
+
+benchmark:
+  formats:
+    - csv
+    - parquet
+  repetitions: 3
