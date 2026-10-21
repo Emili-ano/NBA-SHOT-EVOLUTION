@@ -57,12 +57,16 @@ y generar datasets preparados para los tres analisis.
 
 ## Metricas propuestas
 
-- Porcentaje de tiros acertados (FG%)
-- Puntos por intento de tiro
-- Frecuencia de lanzamiento por zona
-- Eficiencia por jugador y equipo
-- Porcentaje de acierto despues de rachas
-- Eficiencia en situaciones clutch, si es viable
+* Porcentaje de acierto (FG%): proporción de lanzamientos encestados por jugador.
+* Puntos por intento: promedio de puntos generados por cada lanzamiento.
+* Probabilidad esperada de enceste (xFG%): probabilidad estimada mediante regresión logística según las características disponibles del tiro.
+* Puntos esperados (xPTS): suma de las probabilidades de enceste multiplicadas por el valor de cada lanzamiento.
+* Puntos por encima de lo esperado (PTS − xPTS): diferencia entre los puntos realmente anotados y los puntos esperados.
+* Clutch FG%: porcentaje de acierto durante los últimos cinco minutos del cuarto periodo o tiempo extra, con diferencia de cinco puntos o menos.
+* Clutch PTS − xPTS: puntos anotados por encima o por debajo de lo esperado específicamente en situaciones clutch.
+* Significancia estadística: evaluación de si el rendimiento superior al esperado puede explicarse por la variación aleatoria, mediante intervalos de confianza y pruebas estadísticas.
+
+Estas métricas se proponen para el análisis posterior. Su cálculo en situaciones clutch dependerá de verificar la disponibilidad y calidad de los datos temporales y del marcador.
 
 ## Fuente de datos
 
