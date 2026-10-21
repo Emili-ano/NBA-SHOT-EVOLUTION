@@ -7,20 +7,23 @@
 
 ## Contexto del problema
 
-Las estadisticas tradicionales de basketball no siempre
-permiten explicar como la seleccion de tiros, las rachas
-de aciertos y el contexto del partido se relacionan con
-la eficiencia de los jugadores.
+Las estadísticas tradicionales de la NBA permiten identificar quiénes anotan más puntos y qué jugadores tienen mejores porcentajes de tiro. Sin embargo, estas métricas no siempre permiten distinguir si un jugador realmente mejora su rendimiento en los momentos decisivos o si su reputación como jugador clutch se debe a la dificultad de sus lanzamientos, al número de oportunidades y a la variación estadística.
 
-NBA SHOT IQ propone un sistema de ingenieria de datos
-para investigar estos fenomenos utilizando registros
-individuales de tiros de la NBA.
+NBA SHOT IQ propone construir una base de datos reproducible de lanzamientos de la NBA y utilizar métodos estadísticos para investigar el rendimiento de los jugadores bajo presión. El proyecto conservará el análisis de zonas, distancias y eficiencia de tiro como fundamento para evaluar si determinados jugadores superan las probabilidades esperadas de enceste en situaciones clutch.
 
 ## Pregunta principal
 
-¿Que patrones de eficiencia de tiro se observan en la NBA
-y como se relacionan con la zona de lanzamiento, las
-rachas de anotacion y las situaciones de cierre de partido?
+¿Existen jugadores de la NBA cuyo rendimiento en situaciones clutch sea estadísticamente superior al esperado, considerando la dificultad de sus lanzamientos, o las diferencias observadas pueden explicarse por la variación estadística?
+
+## Hipótesis de investigación
+
+**Hipótesis nula (H0):** Después de ajustar por la dificultad de los lanzamientos, no existe evidencia estadística de que determinados jugadores encesten más de lo esperado en situaciones clutch.
+
+**Hipótesis alternativa (H1):** Algunos jugadores presentan una efectividad significativamente superior a la esperada en situaciones clutch, incluso después de considerar la dificultad de sus lanzamientos.
+
+**Método estadístico propuesto:** Se utilizará regresión logística para estimar la probabilidad de enceste de cada lanzamiento a partir de las variables disponibles, como distancia, valor del tiro y características del jugador. Posteriormente se compararán los encestes observados con los esperados mediante análisis estadístico e intervalos de confianza.
+
+**Condición de viabilidad:** Antes de identificar situaciones clutch, será necesario verificar que los datos de tiempo y marcador permiten reconstruir correctamente el contexto previo a cada lanzamiento. Si esta información es insuficiente, se documentarán las limitaciones y se evaluará complementar los datos con otra fuente.
 
 ## Preguntas secundarias
 
