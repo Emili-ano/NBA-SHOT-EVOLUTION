@@ -27,25 +27,11 @@ NBA SHOT IQ propone construir una base de datos reproducible de lanzamientos de 
 
 ## Preguntas secundarias
 
-### 1. Shot Selection
-
-¿Que zonas y tipos de lanzamiento generan mas puntos
-por intento y como varian entre jugadores y equipos?
-
-### 2. Hot Hand
-
-¿Cambia la probabilidad de encestar despues de varios
-tiros consecutivos acertados, considerando el jugador
-y la dificultad aproximada del lanzamiento?
-
-### 3. Clutch Performance
-
-¿Como cambia la efectividad de los jugadores durante
-los minutos finales de partidos cerrados?
-
-Este tercer modulo depende de comprobar que los
-marcadores y tiempos disponibles permiten identificar
-correctamente el estado del partido antes de cada tiro.
+1. Identificación de situaciones clutch: ¿Qué lanzamientos ocurren durante los últimos cinco minutos del cuarto periodo o tiempo extra, cuando la diferencia en el marcador es de cinco puntos o menos?
+2. Rendimiento esperado: ¿Qué probabilidad de enceste tiene cada lanzamiento según su distancia, valor y otras características disponibles?
+3. Jugadores clutch: ¿Qué jugadores consiguen más encestes o puntos de los que estadísticamente se esperarían en situaciones de alta presión?
+4. Significancia estadística: ¿Las diferencias entre el rendimiento observado y el esperado son suficientemente grandes para descartar que se deban al azar?
+5. Comparación de rendimiento: ¿Los jugadores identificados como clutch presentan un rendimiento superior al de sus propios lanzamientos fuera de situaciones clutch, después de ajustar por la dificultad del tiro?
 
 ## Unidad de analisis
 
