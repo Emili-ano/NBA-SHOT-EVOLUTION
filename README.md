@@ -141,3 +141,7 @@ En Windows se puede usar `.\.venv\Scripts\python.exe` en lugar de `python`.
 - Es un análisis observacional: muestra asociaciones, no causas.
 
 El detalle está en `docs/final_report.md#limitaciones`.
+
+## Requisitos de la evaluación final
+
+Cinco V, repetición de la carga, capas Bronze/Silver/Gold, escala y uso de IA: `docs/requisitos_evaluacion.md`
