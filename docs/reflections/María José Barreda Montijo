@@ -1,0 +1,22 @@
+# Reflexion individual - María José Barreda Montijo
+
+## ¿Cual fue mi contribucion principal?
+Me encargue de la presentacion del proyecto. Para eso estudie a fondo como funciona NBA SHOT IQ: las pestanas de Jugadores, Ofensiva y Defensa rival, los filtros por temporada y situacion clutch, y como se calculan las recomendaciones. Prepare la explicacion de los resultados, sobre todo que en situaciones clutch la efectividad baja en todas las distancias, y mas en los triples largos.
+
+## ¿Que decision tecnica tome?
+Al preparar la presentacion decidi explicar los resultados con la ventaja relativa contra el promedio de la NBA a la misma distancia, y no con el porcentaje bruto, porque cerca del aro casi todos encestan mucho y eso puede confundir. Tambien decidi recalcar el minimo de 10 intentos por zona, para no presentar como ventaja algo que sale de muy pocos tiros.
+
+## ¿Que problema enfrente?
+Me costo entender por que un jugador con un porcentaje muy alto no siempre salia como el mejor. Descubri que es por el ajuste de 25 tiros de referencia, que acerca al promedio a los jugadores con pocos intentos. Otro reto fue explicar que la muestra clutch es mucho mas chica que la de no clutch, asi que esos resultados se deben tomar con mas cuidado.
+
+## ¿Que aprendi de Git y GitHub?
+Aprendi a moverme dentro de un repositorio, a distinguir entre carpetas y archivos, a crear un archivo nuevo desde GitHub y a hacer un commit con un mensaje claro. Tambien entendi que cada quien sube su trabajo con su propia cuenta para que el historial muestre quien hizo cada cambio.
+
+## ¿Que aprendi sobre trabajo colaborativo?
+Que hay que comunicarse antes de modificar algo para no duplicar trabajo ni cambiar archivos de otros. Tener una estructura comun, como la plantilla de reflexiones, ayuda a que todo quede ordenado y parejo.
+
+## ¿Que parte mejoraria?
+Me involucraria antes en la parte tecnica, no solo al final para presentar. Del proyecto, agregaria datos de contexto como el tipo de tiro, la posicion del defensor o los pases, para que las jugadas recomendadas no se basen solo en efectividad por distancia.
+
+## ¿Que contribucion de otro integrante fue importante?
+La de Emiliano, que armo la estructura inicial del repositorio y la ingesta automatizada de los datos de la NBA; sin eso no habria base para el analisis. Tambien la de Sofia, que subio la plantilla para que todos hicieramos la reflexion con el mismo formato.
