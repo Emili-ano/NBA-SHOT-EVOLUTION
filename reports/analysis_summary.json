@@ -1,0 +1,39 @@
+{
+  "tiros_procesados": 703781,
+  "tiros_base_comparable": 692926,
+  "tiros_clutch": 23483,
+  "efectividad_clutch": 0.4355491206404633,
+  "efectividad_no_clutch": 0.47159653622489145,
+  "diferencia_bruta": -0.036047415584428144,
+  "diferencia_bruta_ic95": [
+    -0.04250095141006043,
+    -0.029593879758795856
+  ],
+  "esperada_clutch": 0.46173623038104833,
+  "diferencia_ajustada_clutch": -0.026187109740585,
+  "diferencia_ajustada_ic95": [
+    -0.03227241455415322,
+    -0.020101804927016773
+  ],
+  "puntos_por_tiro_clutch": 1.0020014478558958,
+  "puntos_por_tiro_no_clutch": 1.09238277194623,
+  "pct_triples_clutch": 0.41383128220414767,
+  "pct_triples_no_clutch": 0.41129864678546196,
+  "ks_distancia": {
+    "estadistico": 0.023186678675514494,
+    "p_valor": 4.999724869822035e-11
+  },
+  "modelo": {
+    "auc_prueba": 0.6580208018985131,
+    "log_loss_prueba": 0.64239458238685,
+    "log_loss_base": 0.6915331475751385,
+    "tiros_entrenamiento": 535554,
+    "tiros_prueba": 133889,
+    "auc_clutch": 0.6668604736931938
+  },
+  "jugadores_evaluados": 162,
+  "jugadores_p_menor_005": 16,
+  "jugadores_esperados_por_azar_p005": 8.1,
+  "jugadores_significativos_bh": 0,
+  "jugadores_superan_liga_p005": 2
+}
