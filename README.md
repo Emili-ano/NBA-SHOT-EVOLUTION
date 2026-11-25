@@ -2,153 +2,142 @@
 
 ### Data Engineering & Basketball Analytics
 
-**Integrantes:** Emiliano, Majo y Sofía
+## Descripción
+
+NBA SHOT IQ es un pipeline reproducible de ingeniería de datos que descarga, limpia, valida y analiza más de 700,000 intentos de tiro de la NBA (temporadas 2023-24 a 2025-26). Su objetivo es evaluar con estadística si existen jugadores realmente "clutch", es decir, que rindan por encima de lo esperado en los momentos decisivos.
+
+## Integrantes
+
+- Emiliano
+- Majo
+- Sofía
 
 ## Problema
 
-La eficiencia de los tiros NBA puede estar relacionada
-con su ubicacion, la secuencia de aciertos y el
-contexto del partido.
+Las estadísticas tradicionales no distinguen si un jugador mejora en los momentos decisivos o si su fama de "clutch" se debe a la dificultad de sus tiros, al número de oportunidades o al azar.
 
 ## Pregunta principal
 
-¿Que patrones de eficiencia de tiro se observan en la
-NBA y como se relacionan con la zona de lanzamiento,
-las rachas y las situaciones de cierre de partido?
+¿Existen jugadores de la NBA cuyo rendimiento en situaciones clutch sea estadísticamente superior al esperado, considerando la dificultad de sus lanzamientos, o las diferencias observadas pueden explicarse por la variación estadística?
 
-## Objetivo
-
-Construir un pipeline reproducible para adquirir,
-limpiar, validar y preparar datos de tiros NBA,
-y utilizarlos para investigar tres preguntas deportivas.
-
-## Modulos de investigacion
-
-1. Shot Selection: eficiencia por zona y tipo de tiro.
-2. Hot Hand: efectividad despues de rachas.
-3. Clutch Performance: rendimiento bajo presion.
-
-## Fuente
-
-Datos NBA Stats publicados por SportsDataverse.
-
-Adquisicion mediante la API publica de GitHub
-y descargas de archivos Parquet.
+Las preguntas secundarias y las hipótesis están en `docs/project_scope.md`.
 
 ## Arquitectura
 
-Fuente -> Raw -> Interim -> Processed -> Analisis
+```
+SportsDataverse (GitHub Releases)
+   -> src/ingestion      -> data/raw        (Parquet original)
+   -> src/processing     -> data/interim    (limpio por temporada)
+                         -> data/processed  (particionado por temporada)
+   -> src/validation     -> docs/validation.md
+   -> src/analysis       -> reports/tables, reports/figures
+```
 
-## Tecnologias
+Hay una versión paralela Bronze/Silver/Gold en Databricks con PySpark. El detalle de ambas está en `docs/architecture.md`.
 
-Python, pandas, PyArrow, Git y GitHub.
-VS Code y PowerShell como entorno de desarrollo.
+## Requisitos
 
-## Instalacion
+- Python 3.11 o superior
+- Las dependencias de `requirements.txt`: pandas, pyarrow, psutil, scikit-learn, scipy y matplotlib
+- Conexión a internet para la descarga inicial (unos 13 MB)
+- Opcional: Jupyter para abrir los notebooks
 
-Crear el entorno virtual:
+La conexión a Databricks (`conexion_databricks.py` y `src/analysis/inspect_data.py`) es **opcional** y requiere la variable de entorno `DATABRICKS_TOKEN`. El pipeline principal funciona sin ella.
+
+## Instalación
+
+Windows (PowerShell o Anaconda PowerShell):
 
     py -m venv .venv
-
-Instalar dependencias:
-
     .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 
-## Adquisicion
+macOS / Linux:
 
-    .\.venv\Scripts\python.exe -m src.ingestion.download_data --years 2024 2025 2026
+    python3 -m venv .venv
+    source .venv/bin/activate
+    pip install -r requirements.txt
 
-## Exploracion preliminar
+## Obtención de datos
 
-    .\.venv\Scripts\python.exe -m src.analysis.inspect_data
+    python -m src.ingestion.download_data --years 2024 2025 2026
 
-## Estructura
+Los archivos se guardan en `data/raw/` junto con `ingestion_manifest.json` (tamaño y SHA-256). No se suben a GitHub. Para revisar la estructura sin descargar nada, hay una muestra de 300 tiros en `data/sample/nba_shots_sample.csv`.
 
-- data/: raw, interim, processed y sample
-- docs/: documentacion y decisiones
-- notebooks/: exploracion y resultados
-- src/: adquisicion, procesamiento y validacion
-- tests/: pruebas automatizadas
-- reports/: tablas y graficas
-- config/: configuracion
+## Ejecución
 
-## Estado
+Pipeline completo con un solo comando:
 
-Adquisicion automatizada y exploracion preliminar
-funcionando. Procesamiento, validacion, benchmarks
-y documentacion adicional en desarrollo.
+    python main.py
 
-## Limitaciones
+Si los datos ya están descargados:
 
-Consultar docs/project_scope.md.
+    python main.py --skip-download
 
-## Seguimiento de requisitos
+O paso por paso:
 
-Consultar docs/requirements_checklist.md.
+    python -m src.ingestion.download_data --years 2024 2025 2026
+    python -m src.processing.build_dataset
+    python -m src.validation.validate_dataset
+    python -m unittest discover -s tests -v
+    python -m src.analysis.run_analysis
+    python -m src.analysis.benchmark
 
-## Ejecucion completa del pipeline
+En Windows se puede usar `.\.venv\Scripts\python.exe` en lugar de `python`.
 
-Ejecutar los siguientes comandos desde la raiz del repositorio.
+## Resultados principales
 
-### 1. Adquisicion
-```powershell
-python -m src.ingestion.download_data --years 2024 2025 2026
-```
+| Resultado | Valor |
+|---|---|
+| Tiros procesados | 703,781 (24 duplicados eliminados) |
+| Comprobaciones de calidad | 60 / 60 aprobadas |
+| Pruebas automatizadas | 16 / 16 aprobadas |
+| Efectividad clutch vs no clutch | 43.55% vs 47.16% (−3.60 pp, IC 95% −4.25 a −2.96) |
+| Efectividad esperada en clutch por dificultad | 46.17% → caída ajustada −2.62 pp (IC 95% −3.23 a −2.01) |
+| Jugadores evaluados (≥ 50 tiros clutch) | 162 |
+| Jugadores con efecto clutch significativo (Benjamini-Hochberg) | **0** |
 
-### 2. Exploracion preliminar
-```powershell
-python -m src.analysis.inspect_data
-```
+**Conclusión:** la liga encesta menos en clutch, y unas tres cuartas partes de esa caída no se explican por la dificultad del tiro. Sin embargo, ningún jugador muestra un rendimiento clutch superior al esperado que sea estadísticamente significativo, así que no se rechaza H0.
 
-### 3. Procesamiento
-```powershell
-python -m src.processing.build_dataset
-```
+- Reporte completo: `docs/final_report.md`
+- Tablas: `reports/tables/`
+- Figuras: `reports/figures/`
+- Herramienta interactiva: `reports/NBA_SHOT_IQ_Clutch_Strategy.html` (abrir en Chrome o Edge)
+- Notebooks: `notebooks/03_analysis.ipynb` y `notebooks/04_results.ipynb`
 
-### 4. Validaciones
-```powershell
-python -m src.validation.validate_dataset
-```
+## Estructura del repositorio
 
-### 5. Pruebas automatizadas
-```powershell
-python -m unittest discover -s tests -v
-```
+    config/          configuración de ejemplo
+    data/            raw, interim, processed (no versionados) y sample
+    docs/            alcance, fuentes, diccionario, arquitectura, decisiones,
+                     validación, rendimiento, reproducibilidad, reporte final
+                     y reflexiones individuales
+    notebooks/       01 exploración, 03 análisis, 04 resultados y pipeline Databricks
+    reports/         tablas, figuras, resumen del análisis y herramienta interactiva
+    src/ingestion/   descarga de datos
+    src/processing/  limpieza y capas de datos
+    src/validation/  comprobaciones de calidad
+    src/analysis/    análisis clutch, benchmark y exploración
+    tests/           pruebas automatizadas
+    main.py          ejecución completa del pipeline
 
-### 6. Benchmark
-```powershell
-python -m src.analysis.benchmark
-```
+## Documentación
 
-En Windows se puede utilizar
-.\.venv\Scripts\python.exe en lugar de python.
-
-## Resultados verificados
-
-- Tres temporadas NBA descargadas.
-- 703781 intentos de tiro procesados.
-- 60 comprobaciones de calidad aprobadas.
-- 8 pruebas automatizadas exitosas.
-- Comparacion CSV vs Parquet ejecutada.
-- Reproduccion completa verificada desde una
-  copia nueva en la misma computadora.
-
-## Documentacion
-
-- Fuente de datos: docs/data_sources.md
-- Alcance: docs/project_scope.md
-- Arquitectura: docs/architecture.md
-- Decisiones: docs/decisions.md
-- Reproducibilidad: docs/reproducibility.md
-- Validaciones: docs/validation.md
-- Rendimiento: docs/performance.md
-- Requisitos: docs/requirements_checklist.md
+- Alcance: `docs/project_scope.md`
+- Fuente de datos: `docs/data_sources.md`
+- Diccionario: `docs/data_dictionary.md`
+- Arquitectura: `docs/architecture.md`
+- Decisiones: `docs/decisions.md`
+- Validaciones: `docs/validation.md`
+- Rendimiento: `docs/performance.md`
+- Reproducibilidad: `docs/reproducibility.md`
+- Reporte final: `docs/final_report.md`
+- Reflexiones: `docs/reflections/`
 
 ## Limitaciones
 
-Los resultados deportivos definitivos de
-Shot Selection, Hot Hand y Clutch se desarrollaran
-en la siguiente etapa del proyecto.
+- El marcador previo a cada tiro se estima con el último enceste de campo. La fuente no incluye tiros libres.
+- No hay información sobre la defensa, el cansancio ni el reloj de posesión.
+- Tres temporadas dan poca potencia estadística para detectar efectos individuales pequeños.
+- Es un análisis observacional: muestra asociaciones, no causas.
 
-La documentacion detalla las limitaciones de
-duplicados, marcadores y cronologia.
+El detalle está en `docs/final_report.md#limitaciones`.

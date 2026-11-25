@@ -1,4 +1,4 @@
-﻿# NBA SHOT IQ - Decisiones tecnicas
+# NBA SHOT IQ - Decisiones tecnicas
 
 ## Decision 1: Utilizar NBA Stats mediante SportsDataverse
 
@@ -157,11 +157,98 @@ Comenzar directamente con visualizaciones
 y conclusiones deportivas.
 
 ### Consecuencias
-Los resultados definitivos de Shot Selection,
-Hot Hand y Clutch quedaran para el examen final.
+Los resultados definitivos del analisis clutch se
+implementaron en src/analysis/run_analysis.py (examen final).
 
 El pipeline ya permite preparar datos para
 desarrollar posteriormente esos analisis.
+
+---
+
+## Decision 8: Definicion operativa de clutch
+
+### Decision
+Un tiro es clutch si ocurre en los ultimos 5 minutos del 4o periodo
+o en tiempo extra y la diferencia estimada es de 5 puntos o menos.
+El marcador se estima con el ultimo marcador conocido en un instante
+anterior al tiro.
+
+### Razon
+Es la definicion usada por NBA Stats. La fuente solo registra el
+marcador despues de encestes, por lo que se usa el marcador previo
+para no incluir el resultado del propio tiro.
+
+### Alternativas consideradas
+Ultimos 2 minutos y 3 puntos (muy pocos tiros por jugador) y usar el
+marcador del mismo registro (contamina con el resultado del tiro).
+
+### Consecuencias
+Se excluyen 2,352 tiros en instantes ambiguos y los tiros sin
+marcador previo. La version pandas reproduce las cifras de Databricks.
+
+---
+
+## Decision 9: Regresion logistica como modelo de dificultad
+
+### Decision
+Estimar la probabilidad de enceste con regresion logistica usando
+distancia en pies, valor del tiro y tipo de tiro, entrenada solo con
+tiros no clutch.
+
+### Razon
+Es interpretable, rapida con 670,000 tiros y produce probabilidades
+bien calibradas. Entrenar sin tiros clutch evita que el modelo
+aprenda el propio efecto que se quiere medir.
+
+### Alternativas consideradas
+Promedio por rango de distancia (menos preciso), gradient boosting
+(menos interpretable, mejora marginal) y modelos con jugador
+(mezclarian habilidad con dificultad).
+
+### Consecuencias
+AUC de 0.66. El modelo no observa defensa ni reloj de posesion;
+se documenta como limitacion.
+
+---
+
+## Decision 10: Correccion por comparaciones multiples
+
+### Decision
+Comparar a cada jugador contra su propio nivel ajustado fuera de
+clutch y corregir los p-valores con Benjamini-Hochberg.
+
+### Razon
+Con 162 pruebas simultaneas, al 5% se esperan unos 8 falsos
+positivos solo por azar.
+
+### Alternativas consideradas
+Sin correccion (infla falsos positivos) y Bonferroni (demasiado
+conservador).
+
+### Consecuencias
+Ningun jugador resulta significativo. Se reportan tambien los
+p-valores sin corregir para transparencia.
+
+---
+
+## Decision 11: Herramienta interactiva con suavizado
+
+### Decision
+Publicar una pagina HTML autocontenida con datos agregados
+(reports/tables/dashboard_data.csv) y suavizar la ventaja de cada
+jugador sumando 25 tiros ficticios con la efectividad de la liga.
+
+### Razon
+Permite explorar resultados sin instalar nada. El suavizado evita
+que un jugador con 3 de 3 aparezca como el mejor.
+
+### Alternativas consideradas
+Dashboard en Databricks (requiere cuenta) o Streamlit (requiere
+servidor).
+
+### Consecuencias
+La pagina es exploratoria: no sustituye las pruebas estadisticas del
+analisis principal.
 
 ---
 
@@ -169,7 +256,8 @@ desarrollar posteriormente esos analisis.
 
 - Confirmar el identificador unico de cada tiro.
 - Verificar la cronologia de eventos simultaneos.
-- Reconstruir correctamente los marcadores.
+- Reconstruir el marcador exacto con play-by-play completo
+  (resuelto parcialmente con el marcador previo estimado).
 - Confirmar los tipos de temporada incluidos.
 - Evaluar herramientas distribuidas al escalar.
 

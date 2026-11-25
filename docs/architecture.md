@@ -1,4 +1,4 @@
-﻿# Arquitectura de NBA SHOT IQ
+# Arquitectura de NBA SHOT IQ
 
 ## 1. Objetivo
 
@@ -187,3 +187,40 @@ pruebas basicas y benchmark implementados.
 
 Los analisis deportivos definitivos y
 el dashboard pertenecen al examen final.
+
+## 13. Arquitectura final - Examen final
+
+SportsDataverse / GitHub Releases
+        |
+        v
+src/ingestion/download_data.py  -> data/raw/ (+ manifiesto SHA-256)
+        |
+        v
+src/processing/build_dataset.py -> data/interim/ -> data/processed/
+        |
+        +----> src/validation/validate_dataset.py -> docs/validation.md
+        |
+        +----> src/analysis/benchmark.py          -> docs/performance.md
+        |
+        +----> src/analysis/run_analysis.py
+                  |  usa src/analysis/clutch.py
+                  |  (marcador previo, bandera clutch,
+                  |   regresion logistica, pruebas por jugador)
+                  v
+           reports/tables/ + reports/figures/ + reports/analysis_summary.json
+                  |
+                  v
+           reports/NBA_SHOT_IQ_Clutch_Strategy.html (exploracion interactiva)
+
+Orquestacion: `python main.py` ejecuta adquisicion, procesamiento,
+validacion, pruebas y analisis en orden y se detiene si un paso falla.
+
+Implementacion paralela en Databricks: Bronze (Delta) -> Silver
+(sin duplicados) -> Gold (agregados), en
+notebooks/NBA_SHOT_IQ_01_BRONZE_SILVER_GOLD.ipynb. El analisis local
+reproduce sus cifras (692,926 tiros comparables, 23,483 clutch).
+
+Escalabilidad del analisis: la reconstruccion del marcador requiere
+ordenar los tiros de cada partido; en pandas toma unos 3 segundos con
+700,000 filas. Con decenas de temporadas convendria ejecutarla en
+PySpark con ventanas por game_id, como en el notebook de Databricks.
